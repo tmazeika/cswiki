@@ -59,7 +59,7 @@ class Article
   end
 
   def to_h
-    { 'title' => title, 'url' => url }
+    { 'filename' => @filename, 'title' => title, 'url' => url }
   end
 
   private
