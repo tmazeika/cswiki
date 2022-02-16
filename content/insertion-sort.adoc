@@ -4,6 +4,7 @@ Insertion sort is an algorithm.
 
 [source,python]
 ----
+# Performs insertion sort.
 def insertion_sort(arr):
     return arr
 ----
