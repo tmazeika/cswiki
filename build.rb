@@ -11,6 +11,7 @@ end
 
 Liquid::Template.error_mode = :strict
 
+# Represents a Liquid template on the filesystem that can be parsed and rendered to HTML.
 class Template
   def initialize(name)
     @name = name
@@ -34,6 +35,7 @@ class Template
   end
 end
 
+# Represents a wiki article on the filesystem written in AsciiDoc that can be parsed and rendered to HTML.
 class Article
   def initialize(filename)
     @filename = filename
@@ -80,6 +82,7 @@ index_view = Template.new 'views/index'
 
 articles = Dir['content/**/*.adoc'].map { |filename| Article.new filename }
 
+# Generate HTML article pages from their AsciiDoc source.
 articles.each do |article|
   File.write "build/wiki/#{article.slug}.html", default_layout.render(
     'page' => {
@@ -93,6 +96,7 @@ articles.each do |article|
   )
 end
 
+# Generate index page.
 File.write 'build/index.html', default_layout.render(
   'page' => {
     'title' => 'CSWiki'
