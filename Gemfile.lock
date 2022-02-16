@@ -1,0 +1,20 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    asciidoctor (2.0.17)
+    liquid (5.1.0)
+    rouge (3.28.0)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  asciidoctor (~> 2.0)
+  liquid (~> 5.1)
+  rouge (~> 3.28)
+
+RUBY VERSION
+   ruby 3.1.0p0
+
+BUNDLED WITH
+   2.3.3

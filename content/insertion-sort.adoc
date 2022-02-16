@@ -1,0 +1,9 @@
+= Insertion Sort
+
+Insertion sort is an algorithm.
+
+[source,python]
+----
+def insertion_sort(arr):
+    return arr
+----

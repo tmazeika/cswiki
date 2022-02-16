@@ -1,0 +1,11 @@
+<h1>Welcome to CSWiki</h1>
+<p>All wiki articles:</p>
+<ul>
+  {% for article in articles %}
+    <li>
+      <a href="{{ article.url }}">
+        {{- article.title -}}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
