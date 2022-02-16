@@ -1,0 +1,15 @@
+= CSWiki
+
+A free and open wiki for topics in computer science and programming. Edits to wiki articles are made via GitHub pull requests. Repository maintainers may immediately merge small changes like typo fixes. Large changes and new articles will be proofed and peer reviewed. The site is statically built, which means that there is no server code, and commits to the main branch are continuously deployed to https://vercel.com[Vercel].
+
+All wiki articles are written in https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/[AsciiDoc] and released under the https://www.gnu.org/licenses/fdl-1.3.html[GNU Free Documentation License 1.3].
+
+== Development
+
+Content (rather than code) may be created and edited directly within GitHub's web interface, which also provides a rendered preview for AsciiDoc. The static site generation code, however, requires https://www.ruby-lang.org/en/[Ruby 2.7] and https://bundler.io/[Bundler] to execute. To build the site locally, run:
+
+[source,bash]
+$ bundle
+$ ruby build.rb
+
+The resulting HTML and assets will be output to the `+build+` folder.
