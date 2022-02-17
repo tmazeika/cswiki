@@ -1,0 +1,100 @@
+= Insertion Sort
+
+|===
+||Best Case|Average Case|Worst Case
+
+|*Input*
+|Sorted
+|Random
+|Reversed
+
+|*Time*
+|stem:[\Theta(n)]
+|stem:[O(n^2)]
+|stem:[\Theta(n^2)]
+
+|*Space*
+|stem:[O(1)]
+|stem:[O(1)]
+|stem:[O(1)]
+|===
+
+Insertion sort works by inserting each element of an unsorted input array into a sorted output array. This is an in-place algorithm because it doesn't create a _new_ output array, but rather maintains a sorted and unsorted region of the input array, mutating the array directly.
+
+Additionally, the sort is stable because each element from left to right of the unsorted region gets inserted as far right into the sorted region as possible.
+
+== Implementation
+
+We start by iterating over the unsorted region of an input array of length stem:[n]. Initially, the unsorted region is indices stem:[1] through stem:[n - 1]. For each unsorted element stem:[x] at index stem:[i \geq 1], insert stem:[x] into the sorted region, which is always indices stem:[0] through stem:[i - 1]. To find where to insert stem:[x], search backwards from index stem:[i - 1], shifting each element forward to make room for the eventual insertion of stem:[x], until we find an element that is less than or equal to stem:[x]. The "or equal to" part is important for maintaining stability.
+
+[source,python]
+----
+def insertion_sort(arr):
+# Iterate over the unsorted region, which starts at index 1.
+    for i, x in enumerate(arr[1:], start=1):
+        j = i - 1
+# Search backwards for a place to insert x.
+        while j >= 0 and x < arr[j]:
+# Inside this loop, it holds that x comes before the current search position. Therefore, shift this element forward.
+            arr[j + 1] = arr[j]
+            j -= 1
+# Outside the while loop, we've found the index at which to insert x.
+        arr[j + 1] = x
+    return arr
+print(insertion_sort([]))           # []
+print(insertion_sort([3, 2, 2, 8])) # [2, 2, 3, 8]
+print(insertion_sort([7, 6, 4, 1])) # [1, 4, 6, 7]
+----
+
+== Analysis
+
+Let's annotate each loop of the implementation with how many times it will run.
+
+[source,python]
+----
+def insertion_sort(arr):
+    # (1) Runs exactly n - 1 times:
+    for i, x in enumerate(arr[1:], start=1):
+        j = i - 1
+        # (2) Runs at most i times:
+        while j >= 0 and x < arr[j]:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = x
+    return arr
+----
+
+Comment 1 says that the outer for loop runs stem:[n - 1] times. Comment 2 says that it takes at most stem:[i] iterations to insert every stem:[x] into the sorted region. Because that's a range and not an exact number, there are three cases to evaluate:
+
+. In the best case, there are no iterations. This happens when the first insertion position we check is the correct one, causing one comparison and no shifts. This means that the input array is already sorted.
++
+[stem]
+++++
+\begin{equation}
+   (n - 1) \times 1 \in \Theta(n)
+\end{equation}
+++++
+
+. In the average case, there are stem:[i / 2] iterations. When the input array is in random order, some insertions of stem:[x] into the sorted region are quick, while others take some time. This averages out to looking back stem:[i / 2] positions.
++
+[stem]
+++++
+\begin{equation}
+    \sum_{i = 1}^{n - 1}\frac{i}{2} = \frac{n (n - 1)}{4} \in O(n^2)
+\end{equation}
+++++
+
+. In the worst case, there are stem:[i] iterations. This occurs when every stem:[x] gets inserted at the head of the array, causing the most shifts and comparisons. This means that the array is in reverse order.
++
+[stem]
+++++
+\begin{equation}
+    \sum_{i = 1}^{n - 1}i = \frac{n (n - 1)}{2} \in \Theta(n^2)
+\end{equation}
+++++
+
+Generally, Insertion sort is best for small or nearly-sorted arrays.
+
+== Trivia
+
+* At the end of stem:[k] iterations of the outer for loop, the first stem:[k + 1] elements of the input array are sorted.

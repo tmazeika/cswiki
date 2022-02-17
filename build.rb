@@ -55,6 +55,7 @@ class Article
 
   def body
     Asciidoctor.convert_file @filename, safe: :safe, to_file: false, attributes: {
+      'stem' => 'latexmath',
       'source-highlighter' => 'rouge',
       'rouge-style' => 'github'
     }
