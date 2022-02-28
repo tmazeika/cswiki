@@ -1,0 +1,14 @@
+<% if title? %>
+  <% if level == 1 %>
+    <h2 id="<%= id %>">
+      <span class="text"><%= title %></span>
+      <span class="edit">[ <a href="<%= github_link(edit: true, line: source_location.lineno) %>">edit</a> ]</span>
+    </h2>
+  <% else %>
+    <h3 id="<%= id %>">
+      <span class="text"><%= title %></span>
+      <span class="edit">[ <a href="<%= github_link(edit: true, line: source_location.lineno) %>">edit</a> ]</span>
+    </h3>
+  <% end %>
+<% end %>
+<%= content %>

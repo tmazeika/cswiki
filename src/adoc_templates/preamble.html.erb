@@ -1,0 +1,9 @@
+<%= content %>
+<% if document.sections? %>
+  <nav class="toc">
+    <p class="toc-title">
+      <strong>Contents</strong>
+    </p>
+    <%= document.converter.convert document, 'outline' %>
+  </nav>
+<% end %>

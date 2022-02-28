@@ -21,6 +21,8 @@
 
 Insertion sort works by inserting each element of an unsorted input array into a sorted output array. This is an in-place algorithm because it doesn't create a _new_ output array, but rather maintains a sorted and unsorted region of the input array, mutating the array directly.
 
+> asdf
+
 Additionally, the sort is stable because each element from left to right of the unsorted region gets inserted as far right into the sorted region as possible.
 
 == Implementation

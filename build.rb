@@ -11,6 +11,14 @@ end
 
 Liquid::Template.error_mode = :strict
 
+def github_link(edit: false, line: nil)
+  type = edit ? 'edit' : 'blob'
+  path = Pathname.new(source_location.file).relative_path_from(File.absolute_path(File.dirname(__FILE__)))
+  query = !edit ? '?plain=1' : ''
+  hash = line ? "#L#{line}" : ''
+  "https://github.com/tmazeika/cswiki/#{type}/main/#{path}#{query}#{hash}"
+end
+
 # Represents a Liquid template on the filesystem that can be parsed and rendered to HTML.
 class Template
   def initialize(name)
@@ -54,15 +62,19 @@ class Article
   end
 
   def body
-    Asciidoctor.convert_file @filename, safe: :safe, to_file: false, attributes: {
-      'stem' => 'latexmath',
-      'source-highlighter' => 'rouge',
-      'rouge-style' => 'github'
-    }
+    Asciidoctor.convert_file @filename, safe: :safe,
+                                        to_file: false,
+                                        template_dirs: ['src/adoc_templates'],
+                                        template_engine: 'erb',
+                                        sourcemap: true,
+                                        attributes: {
+                                          'stem' => 'latexmath',
+                                          'source-highlighter' => 'rouge'
+                                        }
   end
 
   def to_h
-    { 'filename' => @filename, 'title' => title, 'url' => url }
+    { 'title' => title, 'url' => url }
   end
 
   private
@@ -78,22 +90,17 @@ FileUtils.mkdir 'build/wiki'
 FileUtils.cp_r 'src/public/.', 'build'
 
 default_layout = Template.new 'layouts/default'
-article_view = Template.new 'views/article'
 index_view = Template.new 'views/index'
 
 articles = Dir['content/**/*.adoc'].map { |filename| Article.new filename }
 
-# Generate HTML article pages from their AsciiDoc source.
+# Generate HTML article pages from their AsciiDoc sources.
 articles.each do |article|
   File.write "build/wiki/#{article.slug}.html", default_layout.render(
     'page' => {
       'title' => "#{article.title} - CSWiki"
     },
-    'content' => article_view.render(
-      article.to_h.merge(
-        'body' => article.body
-      )
-    )
+    'content' => article.body
   )
 end
 

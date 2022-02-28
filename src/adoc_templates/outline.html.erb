@@ -1,0 +1,10 @@
+<ol>
+  <% sections.each do |section| %>
+    <li>
+      <a href="#<%= section.id %>"><%= section.title %></a>
+      <% if section.sections? %>
+        <%= document.converter.convert section, 'outline' %>
+      <% end %>
+    </li>
+  <% end %>
+</ol>

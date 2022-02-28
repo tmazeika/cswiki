@@ -1,0 +1,8 @@
+<% if style == 'source' %>
+  <% if title? %>
+    <pre class="highlight-title"><%= title %></pre>
+  <% end %>
+  <%= document.syntax_highlighter.format(self, attr('language'), {}) %>
+<% else %>
+  <pre class="highlight"><%= content %></pre>
+<% end %>

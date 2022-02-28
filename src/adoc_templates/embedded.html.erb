@@ -1,0 +1,24 @@
+<div class="article-source">
+  <a href="<%= github_link %>">Source</a>
+</div>
+<article>
+  <h1>
+    <span class="text"><%= document.title %></span>
+    <span class="edit">[ <a href="<%= github_link(edit: true) %>">edit</a> ]</span>
+  </h1>
+  <%= content %>
+  <% if footnotes? %>
+    <h2>
+      <span class="text">Footnotes</span>
+    </h2>
+    <div class="footnotes">
+      <ol>
+        <% footnotes.each do |footnote| %>
+          <li id="footnote-<%= footnote.index %>">
+            <a href="#footnote-ref-<%= footnote.index %>" title="Jump up">^</a> <%= footnote.text %>
+          </li>
+        <% end %>
+      </ol>
+    </div>
+  <% end %>
+</article>
